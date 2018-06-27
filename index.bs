@@ -1061,6 +1061,12 @@ The <dfn>lifetime</dfn> of a
         database.
     </aside>
 
+1. When each [=request=] associated with a transaction is [=request/processed=],
+    a `success` or `error` [=event=] will be fired. While the event is being [=dispatched=],
+    the transaction [=transaction/state=] is set to [=transaction/active=], allowing additional
+    requests to be made against the transaction. Once the event dispatch is complete,
+    the transaction's [=transaction/state=] is set to [=transaction/inactive=] again.
+
 1. A transaction can be <dfn lt="abort|aborting|aborted">aborted</dfn>
     at any time before it is [=transaction/finished=], even if the transaction
     isn't currently [=transaction/active=] or hasn't yet [=transaction/started=].
@@ -1077,7 +1083,8 @@ The <dfn>lifetime</dfn> of a
 
     An explicit call to {{IDBTransaction/commit()}} will initiate a [=transaction/commit=] without waiting for request results to be handled by script.
 
-    When comitting, the implementation must atomically write any changes to the [=database=] made by requests placed against the transaction.  That is, either all of the changes must be written, or if an error occurs, such as a disk write error, the implementation must not write any of the changes to the database. The steps to [=abort a transaction=] will be followed.
+    When comitting, the transaction [=transaction/state=] is set to [=transaction/committing=].
+    The implementation must atomically write any changes to the [=database=] made by requests placed against the transaction.  That is, either all of the changes must be written, or if an error occurs, such as a disk write error, the implementation must not write any of the changes to the database. The steps to [=abort a transaction=] will be followed.
 
 8. When a transaction is [=transaction/committed=] or [=transaction/aborted=],
     its [=transaction/state=] is set to [=transaction/finished=].
