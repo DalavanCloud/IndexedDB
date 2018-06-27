@@ -3150,8 +3150,8 @@ must run these steps:
 1. If |store| has been deleted, [=throw=] an
     "{{InvalidStateError}}" {{DOMException}}.
 
-4. If |transaction| is not [=transaction/active=], [=throw=] a
-    "{{TransactionInactiveError}}" {{DOMException}}.
+1. If |transaction|'s [=transaction/state=] is not [=transaction/active=],
+    then [=throw=] a "{{TransactionInactiveError}}" {{DOMException}}.
 
 1. If |transaction| is a [=read-only transaction=],
     [=throw=] a "{{ReadOnlyError}}" {{DOMException}}.
@@ -5511,7 +5511,7 @@ created [=request=] belongs to is [=transaction/aborted=] using the steps to
 1. Let |transaction| be the [=/transaction=] associated with
     |source|.
 
-1. Assert: |transaction| is [=transaction/active=].
+1. Assert: |transaction|'s [=transaction/state=] is [=transaction/active=].
 
 1. If |request| was not given, let |request| be a new |request| with
     [=request/source=] as |source|.
