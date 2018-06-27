@@ -5748,13 +5748,15 @@ the implementation must run these steps:
 1. [=Dispatch=] |event| at |request| with |legacyOutputDidListenersThrowFlag|.
 
 1. If |transaction|'s [=transaction/state=] is [=transaction/active=],
-    then set |transaction|'s [=transaction/state=] to [=transaction/inactive=].
+    then run these steps:
 
-1. If |legacyOutputDidListenersThrowFlag| is set,
-    then run the steps to [=abort a transaction=] with |transaction| and a newly <a for=exception>created</a> "{{AbortError}}" {{DOMException}}.
+    1. Set |transaction|'s [=transaction/state=] to [=transaction/inactive=].
 
-1. If |transaction|'s [=transaction/request list=] is empty,
-    then run the steps to [=commit a transaction=] with |transaction|.
+    1. If |legacyOutputDidListenersThrowFlag| is set,
+        then run the steps to [=abort a transaction=] with |transaction| and a newly <a for=exception>created</a> "{{AbortError}}" {{DOMException}}.
+
+    1. If |transaction|'s [=transaction/request list=] is empty,
+        then run the steps to [=commit a transaction=] with |transaction|.
 
 </div>
 
@@ -5784,28 +5786,30 @@ the implementation must run these steps:
 1. [=Dispatch=] |event| at [=request=] with |legacyOutputDidListenersThrowFlag|.
 
 1. If |transaction|'s [=transaction/state=] is [=transaction/active=],
-    then set |transaction|'s [=transaction/state=] to [=transaction/inactive=].
+    then run these steps:
 
-1. If |legacyOutputDidListenersThrowFlag| is set,
-    run the steps to [=abort a transaction=] with
-    |transaction| and a newly <a for=exception>created</a>
-    "{{AbortError}}" {{DOMException}} and terminate these steps. This is done even if the
-    event's [=canceled flag=] is not set.
+    1. Set |transaction|'s [=transaction/state=] to [=transaction/inactive=].
 
-    <aside class=note>
-      This means that if an error event is fired and any of the event
-      handlers throw an exception, |transaction|'s
-      {{IDBTransaction/error}} property is set to an {{AbortError}}
-      rather than |request|'s [=request/error=], even if
-      {{Event/preventDefault()}} is never called.
-    </aside>
+    1. If |legacyOutputDidListenersThrowFlag| is set,
+        then run the steps to [=abort a transaction=] with
+        |transaction| and a newly <a for=exception>created</a>
+        "{{AbortError}}" {{DOMException}} and terminate these steps. This is done even if the
+        event's [=canceled flag=] is not set.
 
-1. If the event's [=canceled flag=] is not set,
-    then run the steps to [=abort a transaction=] using |transaction| and [=request=]'s [=request/error=],
-    and terminate these steps.
+        <aside class=note>
+          This means that if an error event is fired and any of the event
+          handlers throw an exception, |transaction|'s
+          {{IDBTransaction/error}} property is set to an {{AbortError}}
+          rather than |request|'s [=request/error=], even if
+          {{Event/preventDefault()}} is never called.
+        </aside>
 
-1. If |transaction|'s [=transaction/request list=] is empty,
-    then run the steps to [=commit a transaction=] with |transaction|.
+    1. If the event's [=canceled flag=] is not set,
+        then run the steps to [=abort a transaction=] using |transaction| and [=request=]'s [=request/error=],
+        and terminate these steps.
+
+    1. If |transaction|'s [=transaction/request list=] is empty,
+        then run the steps to [=commit a transaction=] with |transaction|.
 
 </div>
 
