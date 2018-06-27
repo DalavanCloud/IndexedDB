@@ -5086,10 +5086,15 @@ none.
     <dt><var>transaction</var> . {{IDBTransaction/commit()}}</dt>
     <dd>
       Attempts to commit the transaction. All pending [=requests=] will be allowed
-      to complete, but no new requests will be accepted. The transaction will
-      abort if a pending request fails. This can be used to force a transaction to
-      quickly finish, without waiting for pending requests to fire `success` events
-      before attempting to commit normally.
+      to complete, but no new requests will be accepted. This can be used to force a
+      transaction to quickly finish, without waiting for pending requests to fire
+      `success` events before attempting to commit normally.
+
+      The transaction will abort if a pending request fails, for example due to a
+      constraint error. The `success` events for successful requests will still
+      fire, but throwing an exception in an event handler will not abort the
+      transaction. Similarly, `error` events for failed requests will still fire,
+      but calling `preventDefault()` will not prevent the transaction from aborting.
     </dd>
   </dl>
 </div>
