@@ -5142,7 +5142,8 @@ when invoked, must run these steps:
 The <dfn method for=IDBTransaction>abort()</dfn> method, when invoked,
 must run these steps:
 
-1. If this [=/transaction=]'s [=transaction/state=] is [=transaction/finished=],
+1. If this [=/transaction=]'s [=transaction/state=] is [=transaction/committing=]
+    or [=transaction/finished=],
     then [=throw=] an "{{InvalidStateError}}" {{DOMException}}.
 
 1. Set the [=/transaction=]'s [=transaction/state=] to [=transaction/active=] and run the
