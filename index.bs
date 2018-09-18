@@ -1047,7 +1047,8 @@ The <dfn>lifetime</dfn> of a
 1. A transaction is <dfn>created</dfn> with a [=transaction/scope=] and a [=transaction/mode=].
     When a transaction is created its [=transaction/state=] is initially [=transaction/active=].
 
-1. When an implementation is able to enforce the constraints defined for the transaction [=transaction/scope=] and [=transaction/mode=], defined [below](#transaction-scheduling], the implementation must [=queue a task=] to <dfn lt="start|started">start</dfn> the transaction asynchronously.
+1. When an implementation is able to enforce the constraints defined for the transaction [=transaction/scope=] and [=transaction/mode=], defined [below](#transaction-scheduling),
+    the implementation must [=queue a task=] to <dfn lt="start|started">start</dfn> the transaction asynchronously.
 
     Once the transaction has been [=transaction/started=] the implementation can begin executing the [=requests=] placed against the transaction.
     Requests must be executed in the order in which they were made against the transaction.
